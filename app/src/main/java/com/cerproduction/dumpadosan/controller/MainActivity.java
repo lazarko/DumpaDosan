@@ -3,6 +3,7 @@ package com.cerproduction.dumpadosan.controller;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.cerproduction.dumpadosan.model.Goal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 

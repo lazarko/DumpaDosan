@@ -3,6 +3,11 @@ package com.cerproduction.dumpadosan.controller;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.cerproduction.dumpadosan.R;
 import com.cerproduction.dumpadosan.model.Goal;
@@ -11,12 +16,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,6 +34,7 @@ import android.widget.ImageView;
 
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Lazar Cerovic (2020) Some parts are very much inspired from the course book
@@ -41,22 +44,6 @@ import java.util.List;
  */
 public class AddGoalsActivity extends AppCompatActivity {
 
-    private Button mAddGoalBtn;
-    private ImageButton mTakePicBtn;
-    private EditText mEditTextGoal, mEditTextPart1, mEditTextPart2,
-            mEditTextPart3, mEditTextDifficulty;
-    private DatePicker date;
-    private CheckBox cb;
-    GoalSingleton mGoalSingle;
-    private File mPhotoFile;
-    private Goal mGoal;
-    private ImageView mDisplayPic;
-    private static final int REQ_PHOTO= 2;
-
-    boolean first = false;
-    boolean second = false;
-    Uri mUri;
-    private String TAGOVER = "TAGOVER";
     /**
      * OnCreate method for AddGoal acitivity. Handles the UI and
      * @param savedInstanceState
@@ -64,12 +51,29 @@ public class AddGoalsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //UUID goalId = UUID.fromString(getIntent().getStringExtra("id_uuid_restore"));
+        //mGoal = new Goal("", 0); //Initially
+       // mGoal.update_ID(goalId.toString());
+        //mGoal = mGoalSingle.get(this).getGoal(goalId);
+
         setContentView(R.layout.activity_add_goals);
-        initVar();
-        collectData();
-        photoCollect();
+        GoalSingleton mGoalSingle = GoalSingleton.get(this);
+        Goal g = new Goal("", 1);
+        mGoalSingle.get(this).addGoal(g);
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        AddFragment addFragment = AddFragment.newInstance(g.getID());
+        ft.replace(R.id.placeholder_fragment, addFragment);
+        ft.commit();
 
 
+
+        //initVar();
+        //collectData();
+        //photoCollect();
+
+/*
         mAddGoalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,13 +85,13 @@ public class AddGoalsActivity extends AppCompatActivity {
 
                 }
                 String[] part = new String[] {null, null, null};
-                if(mEditTextPart1.getText().toString().equals("")){
+                if(!mEditTextPart1.getText().toString().equals("")){
                     part[0] = mEditTextPart1.getText().toString();
                 }
-                if(mEditTextPart2.getText().toString().equals("")){
+                if(!mEditTextPart2.getText().toString().equals("")){
                     part[1] = mEditTextPart2.getText().toString();
                 }
-                if(mEditTextPart3.getText().toString().equals("")){
+                if(!mEditTextPart3.getText().toString().equals("")){
                     part[2] = mEditTextPart3.getText().toString();
                 }
 
@@ -97,14 +101,16 @@ public class AddGoalsActivity extends AppCompatActivity {
             }
         });
 
+ */
+
     }
 
     /**
-     * Initializing all variable
-     */
+     * Initializing all variables
+
     private void initVar(){
         mGoalSingle = GoalSingleton.get(this);
-        mGoal = new Goal("", 0); //Initially
+        //mGoal = new Goal("", 0); //Initially
 
         mDisplayPic = (ImageView) findViewById(R.id.iv_display_pic);
         mTakePicBtn = (ImageButton) findViewById(R.id.btn_take_pic);
@@ -118,13 +124,15 @@ public class AddGoalsActivity extends AppCompatActivity {
         cb = (CheckBox) findViewById(R.id.checkboxDatum);
         mAddGoalBtn.setEnabled(false);
         date.setMinDate(System.currentTimeMillis() - 1000);
+        mPhotoFile = mGoalSingle.get(this).getPhotoFile(mGoal);
     }
 
+     */
 
     /**
      * Code for collecting data through the listeners, activating the "add-goal-button" and
      * updating the goal object
-     */
+
     private void collectData(){
 
         TextWatcher tw = new TextWatcher() {
@@ -172,10 +180,11 @@ public class AddGoalsActivity extends AppCompatActivity {
         mEditTextDifficulty.addTextChangedListener(tw);
 
     }
+     */
 
     /**
      * Method for scaling down the image captured and sets the image on the imageview (thumbnail)
-     */
+
     private void updatePhotoView() {
         if (mPhotoFile == null || !mPhotoFile.exists()) {
             mDisplayPic.setImageDrawable(null);
@@ -189,11 +198,12 @@ public class AddGoalsActivity extends AppCompatActivity {
     /**
      * This method contains everything related with photo capturing, including a button listener,
      * specifying where to save the image (with fileprovider).
-     */
+
     private void photoCollect(){
-        mPhotoFile = mGoalSingle.get(this).getPhotoFile(mGoal);
+       // mPhotoFile = mGoalSingle.get(this).getPhotoFile(mGoal);
+        ///Log.i(TAGOVER, "PATH 1: " + mPhotoFile);
         final Intent cImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Log.i(TAGOVER, "File " + mPhotoFile );
+        Log.i(TAGOVER, "File var:  " + mPhotoFile );
 
         PackageManager pm = this.getPackageManager();
 
@@ -204,7 +214,7 @@ public class AddGoalsActivity extends AppCompatActivity {
         mTakePicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUri = FileProvider.getUriForFile(getApplicationContext(),
+                Uri mUri = FileProvider.getUriForFile(getApplicationContext(),
                         "com.cerproduction.dumpadosan.fileprovider",
                         mPhotoFile);
                 cImage.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
@@ -223,7 +233,7 @@ public class AddGoalsActivity extends AppCompatActivity {
 
         updatePhotoView();
     }
-
+     */
 
     /**
      * Method using FileProvider to save the image captured and updates the photo view
@@ -231,19 +241,14 @@ public class AddGoalsActivity extends AppCompatActivity {
      * @param requestCode
      * @param resultCode
      * @param data
-     */
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK) {
             return;
         }
-
-        if (resultCode != this.RESULT_OK) {
-            Uri targetUri = data.getData();
-            mUri = targetUri;
-            return;
-        } else if (requestCode == REQ_PHOTO) {
+        if (requestCode == REQ_PHOTO) {
             Uri uri = FileProvider.getUriForFile(this,
                     "com.cerproduction.dumpadosan.fileprovider",
                     mPhotoFile);
@@ -254,46 +259,49 @@ public class AddGoalsActivity extends AppCompatActivity {
             updatePhotoView();
         }
     }
-
-    /** TODO: ANVÄND DETTA
-     * Method used to restore the picture taken. Called on when orientation of the phone changes
-
+     */
+    /**
+     * Method used to restore the values of the variables before the acitivty stopped. Called on
+     * AFTER the onCreate method
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState){
-        mUri = Uri.parse(savedInstanceState.getString("uri"));
-        updatePhotoView();
-    }
+       // mUri = Uri.parse(savedInstanceState.getString("uri"));
+        mGoal.modifyGoal(savedInstanceState.getString("goal_restore"));
+        mGoal.update_ID(savedInstanceState.getString("id_uuid_restore"));
+        mGoal.modifyDifficulty(savedInstanceState.getInt("difficulty_restore"));
+        mGoal.addDate(savedInstanceState.getString("date_str_restore"));
+        mGoal.addPartGoal(savedInstanceState.getStringArray("part_goals_restore"));
+        mGoalSingle.get(this).updateGoal(mGoal);
 
-    /**
-     * Method used to save the URI, in order to keep the picture on orientation change
-
-
-    @Override public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mUri !=null) {
-            outState.putString("uri", mUri.toString());
-        }
     }
      */
 
-    //TODO: TEST OTHERWISE USE THE ABOVE CODE
-    @Override
-    public void onPause() {
-        super.onPause();
-        mGoalSingle.get(this).updateGoal(mGoal);
-        mPhotoFile = mGoalSingle.get(this).getPhotoFile(mGoal);
-        String str = "/data/user/0/com.cerproduction.dumpadosan/files";
-        File file = new File(str, mGoal.getPhotoFilename());
-        if (mPhotoFile == null || !mPhotoFile.exists()) {
-            mDisplayPic.setImageDrawable(null);
-        } else {
-            Bitmap bitmap = PictureUtils.getScaledBitmap(
-                    mPhotoFile.getPath(), this);
-            mDisplayPic.setImageBitmap(bitmap);
-        }
+    /**
+     * Method used to save the state of the activity, preserved if activity were to be destroyed,
+     * like eg rotation of the phone
+
+    @Override public void onSaveInstanceState(Bundle outState) {
+        //if (mUri !=null) {
+           // outState.putString("uri", mUri.toString());
+       // }
+        //outState.putString("goal_restore", mGoal.getMainGoal());
+        //outState.putInt("difficulty_restore", mGoal.getDifficulty());
+        //outState.putString("id_uuid_restore", mGoal.getID().toString());
+       // outState.putStringArray("part_goals_restore", mGoal.getPartGoals());
+       // outState.putString("date_str_restore", mGoal.getDate());
+        outState.putSerializable("id_uuid_restore", mGoal.getID());
+        super.onSaveInstanceState(outState);
 
     }
 
+    /*
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mGoalSingle.get(this).updateGoal(mGoal);
+    }
+*/
 
 }

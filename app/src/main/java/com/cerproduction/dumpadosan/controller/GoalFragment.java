@@ -1,5 +1,6 @@
 package com.cerproduction.dumpadosan.controller;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -132,8 +133,9 @@ public class GoalFragment extends Fragment {
             mDifficultyTextView.setText(s);
             mTrashButton.setImageResource(R.drawable.ic_delete);
 
-            String str = "/data/user/0/com.cerproduction.dumpadosan/files";
-            File file = new File(str, mGoal.getPhotoFilename());
+            //String str = "/data/user/0/com.cerproduction.dumpadosan/files";
+            File fileDir = getContext().getFilesDir();
+            File file = new File(fileDir, mGoal.getPhotoFilename());
             if(file.exists()){
                 Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 mImageViewGoalPic.setImageBitmap(myBitmap);

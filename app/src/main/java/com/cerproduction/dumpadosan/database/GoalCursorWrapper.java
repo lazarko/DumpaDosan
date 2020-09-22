@@ -16,12 +16,12 @@ import static com.cerproduction.dumpadosan.database.DatabaseParsing.GoalEntry.MA
  * @author Lazar Cerovic (2020) Inspiration from the course book
  * Wraps cursors and adds more methods, primarily used to minimize the code.
  */
-public class CrimeCursorWrapper extends CursorWrapper {
+public class GoalCursorWrapper extends CursorWrapper {
     /**
      * Constructor
      * @param cursor
      */
-    public CrimeCursorWrapper(Cursor cursor) {
+    public GoalCursorWrapper(Cursor cursor) {
         super(cursor);
     }
 

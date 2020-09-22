@@ -5,13 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.cerproduction.dumpadosan.database.CrimeCursorWrapper;
+import com.cerproduction.dumpadosan.database.DatabaseParsing;
+import com.cerproduction.dumpadosan.database.GoalCursorWrapper;
 import com.cerproduction.dumpadosan.database.GoalReaderDbHelper;
 import com.cerproduction.dumpadosan.model.Goal;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static com.cerproduction.dumpadosan.database.DatabaseParsing.GoalEntry.THIRD_PART_GOAL;
 import static com.cerproduction.dumpadosan.database.DatabaseParsing.GoalEntry.SECOND_PART_GOAL;
@@ -77,11 +79,18 @@ public class GoalSingleton {
         values.put(MAIN_GOAL, goal.getMainGoal());
         values.put(DIFFICULTY, ""+goal.getDifficulty());
         values.put(DATE, goal.getDate());
-        values.put(FIRST_PART_GOAL, goal.getPartGoals()[0]);
-        values.put(SECOND_PART_GOAL, goal.getPartGoals()[1]);
-        values.put(THIRD_PART_GOAL, goal.getPartGoals()[2]);
+        if(goal.getPartGoals() != null) {
+            values.put(FIRST_PART_GOAL, goal.getPartGoals()[0]);
+            values.put(SECOND_PART_GOAL, goal.getPartGoals()[1]);
+            values.put(THIRD_PART_GOAL, goal.getPartGoals()[2]);
+        }else{
+            values.put(FIRST_PART_GOAL, "");
+            values.put(SECOND_PART_GOAL, "");
+            values.put(THIRD_PART_GOAL, "");
+        }
         mDB.insert(TABLE_NAME, null, values);
     }
+
 
 
     /**
@@ -96,15 +105,16 @@ public class GoalSingleton {
         values.put(MAIN_GOAL, goal.getMainGoal());
         values.put(DIFFICULTY, goal.getDifficulty());
         values.put(DATE, goal.getDate());
-        if(goal.getPartGoals() != null ){
+        if(goal.getPartGoals() != null) {
             values.put(FIRST_PART_GOAL, goal.getPartGoals()[0]);
             values.put(SECOND_PART_GOAL, goal.getPartGoals()[1]);
             values.put(THIRD_PART_GOAL, goal.getPartGoals()[2]);
         }else{
-             values.put(FIRST_PART_GOAL, "");
-             values.put(SECOND_PART_GOAL, "");
-             values.put(THIRD_PART_GOAL, "");
+            values.put(FIRST_PART_GOAL, "");
+            values.put(SECOND_PART_GOAL, "");
+            values.put(THIRD_PART_GOAL, "");
         }
+
 
         mDB.update(TABLE_NAME, values,
                 GOAL_ID + " = ?",
@@ -118,7 +128,7 @@ public class GoalSingleton {
      */
     public List<Goal> getGoalList() {
         List<Goal> list = new ArrayList<>();
-        CrimeCursorWrapper cursor = qDatabase(null, null);
+        GoalCursorWrapper cursor = qDatabase(null, null);
 
         try {
             cursor.moveToFirst();
@@ -133,13 +143,28 @@ public class GoalSingleton {
         return list;
     }
 
+    public Goal getGoal(UUID id){
+        GoalCursorWrapper cursor = qDatabase(
+                GOAL_ID + " = ?",
+                new String[]{id.toString()}
+        );
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+            cursor.moveToFirst();
+            return cursor.getGoal();
+        } finally {
+            cursor.close();
+        }
+    }
     /**
      * Method used for wrapping a cursor and extracting information from it
      * @param whereClause
      * @param whereArgs
-     * @return CrimeCursorWrapper
+     * @return GoalCursorWrapper
      */
-    private CrimeCursorWrapper qDatabase(String whereClause, String[] whereArgs) {
+    private GoalCursorWrapper qDatabase(String whereClause, String[] whereArgs) {
         Cursor cursor = mDB.query(
                 TABLE_NAME,
                 null,
@@ -149,7 +174,7 @@ public class GoalSingleton {
                 null,
                 null
         );
-        return new CrimeCursorWrapper(cursor);
+        return new GoalCursorWrapper(cursor);
     }
 
     /**
