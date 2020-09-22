@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.InitFragment"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_start1"/>
+
+    <Spinner
+        android:id="@+id/spinner_prillor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_start2"/>
+
+
+    <Spinner
+        android:id="@+id/spinner_dosor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DATUM NÄR SISTA SNUSEN TOGS"/>
+
+
+
+    <DatePicker
+        android:id="@+id/datePicker1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minDate="01/01/1900"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:listSeparatorTextViewStyle"
+        android:text="GENOMSNITTSKOSTNADEN FÖR EN DOSA? (ANTAL KRONOR)"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_average_cost"
+        android:inputType="number"/>
+
+
+    <Button
+        android:id="@+id/nextBtn_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LÄGG TILL"/>
+
+
+
+</LinearLayout>

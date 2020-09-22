@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">DumpaDosan</string>
+
+
+    <string name="enter_start1">Hur många prillor snusar du per dag?</string>
+    <string name="enter_start2">Hur många dosor snusar du per vecka?</string>
+    <string name="edit_start1">Antal prillor</string>
+    <string name="edit_start2">Antal dosor</string>
+
+
+    <string name="litteratur1">Jansson, Rolf. Sluta Snusa - Snusfri på en timme (2019)</string>
+    <string name="litteratur2">Hillvesson, Fredrik.
+        Snusfri på tre veckor : konsten att sluta snusa utan att gå i bitar (2014)</string>
+    <string name="litteratur3">Åkerman, Anders. Snusfri (2019)</string>
+
+    <!-- Number of snus per day (PRILLOR), for spinner -->
+    <string-array name="snus_per_day">
+        <item>1-2 prillor</item>
+        <item>3-4 prillor</item>
+        <item>5-6 prillor</item>
+        <item>7-8 prillor</item>
+        <item>9-10 prillor</item>
+        <item>11-12 prillor</item>
+        <item>13-14 prillor</item>
+        <item>15-16 prillor</item>
+        <item>17-18 prillor</item>
+        <item>19-20 prillor</item>
+        <item>20+ prillor</item>
+    </string-array>
+
+    <!-- Number of snus per week (DOSOR), for spinner -->
+    <string-array name="snus_per_week">
+        <item>1 dosa/or</item>
+        <item>2 dosa/or</item>
+        <item>3 dosa/or</item>
+        <item>4 dosa/or</item>
+        <item>5 dosa/or</item>
+        <item>6 dosa/or</item>
+        <item>7 dosa/or</item>
+        <item>7+ dosa/or</item>
+    </string-array>
+
+
+    <string name="tab_text_1">FRAMSTEG</string>
+    <string name="tab_text_2">MÅL</string>
+    <string name="title_activity_preference">Inställningar</string>
+
+    <string name="title_activity_about">Om DumpaDosan</string>
+    <string name="large_text">
+        "Applikationen DumpaDosan är till som stöd för dig som har slutat snusa eller har i avsikt att göra det.\n"
+        "Målet är att förmedla till ex-snusaren de positiva aspekterna med att sluta, så som miljö, hälso och ekonomiska.\n"
+        "DumpaDosan kan även bidra med ytterliggare insikter om hur det tidigare eller nuvarande beroende.\n"
+        "Applikationen erbjuder också tips på organisationer, litteratur och andra råd för att hålla motivationen uppe. \n\n"
+
+        "Denna applikation gjordes i samband med kursen Utveckling av mobila applikationer (5DV209) på Umeå Universitet.\n"
+        "Ansvarig utvecklare är Lazar Cerovic, som är student på fjärde året i civilingenjörsprogrammet i informationteknik vid Kungliga Tekniska Högskolan (KTH). \n\n"
+
+        "Kontakt för övriga frågor sker via mejl: lazarc@kth.se \n\n"
+    </string>
+    <string name="action_settings">Settings</string>
+
+</resources>

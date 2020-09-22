@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    >
+
+
+
+    <TextView
+        android:id="@+id/goal_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MÅL" />
+
+
+    <TextView
+        android:id="@+id/difficulty_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Svårighetsgrad"/>
+
+    <TextView
+        android:id="@+id/date_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Slutdatum: Ej Specificerat" />
+    <TextView
+        android:id="@+id/part1_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delmål1: Ej Specificerat" />
+    <TextView
+        android:id="@+id/part2_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delmål2: Ej Specificerat" />
+    <TextView
+        android:id="@+id/part3_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delmål3: Ej Specificerat" />
+    <ImageView
+        android:id="@+id/goal_pic"
+        android:layout_gravity="clip_horizontal"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        />
+
+    <ImageButton
+        android:id="@+id/trash_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:tint="@color/cardview_dark_background"
+        tools:src="@android:drawable/ic_menu_delete" />
+
+
+</LinearLayout>
