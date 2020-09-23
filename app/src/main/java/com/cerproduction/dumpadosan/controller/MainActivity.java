@@ -45,7 +45,12 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AddGoalsActivity.class));
+                Goal newGoal = new Goal("", 1);
+                GoalSingleton.get(getApplicationContext()).addGoal(newGoal);
+                Intent intent = AddGoalsActivity
+                        .addIntent(getApplicationContext(), newGoal.getID());
+                startActivity(intent);
+                //new Intent(MainActivity.this, AddGoalsActivity.class)
             }
         });
     }

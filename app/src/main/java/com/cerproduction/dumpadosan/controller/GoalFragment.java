@@ -208,6 +208,7 @@ public class GoalFragment extends Fragment {
                     mAdapter.notifyItemRangeChanged(position, mGoalsList.size());
                 }
             });
+
         }
 
         /**

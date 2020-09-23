@@ -35,9 +35,10 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * @author Lazar Cerovic (2020) Some parts are very much inspired from the course book
+ * This fragment handles everything related to adding a goal such as adding sub-goals, date expected
+ * of fulfillment, difficulty and even a picture. Right now not much is done with the picture except
+ * for just saving the filepath. That may change in the future.
  */
 public class AddFragment extends Fragment {
 
@@ -60,7 +61,9 @@ public class AddFragment extends Fragment {
 
     private String TAGOVER = "TAGOVER";
 
-
+    /**
+     * Should be empty
+     */
     public AddFragment() {
         // Required empty public constructor
     }
@@ -93,15 +96,18 @@ public class AddFragment extends Fragment {
         }
     }
 
+    /**
+     * Handles the interaction with
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add, container, false);
         initVar(v);
-
-        if(mGoal == null){
-            Log.i(TAGOVER, "YALLLA");
-        }
         collectData();
         photoCollect();
 
@@ -127,7 +133,6 @@ public class AddFragment extends Fragment {
                 }
 
                 mGoal.addPartGoal(part);
-                GoalSingleton.get(getActivity()).addGoal(mGoal);
                 startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
@@ -153,8 +158,6 @@ public class AddFragment extends Fragment {
      * specifying where to save the image (with fileprovider).
      */
     private void photoCollect(){
-        // mPhotoFile = mGoalSingle.get(this).getPhotoFile(mGoal);
-        ///Log.i(TAGOVER, "PATH 1: " + mPhotoFile);
         final Intent cImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Log.i(TAGOVER, "File var:  " + mPhotoFile );
 
@@ -282,6 +285,9 @@ public class AddFragment extends Fragment {
         date.setMinDate(System.currentTimeMillis() - 1000);
     }
 
+    /**
+     * Call onPause method, if the process is paused
+     */
     @Override
     public void onPause() {
         super.onPause();

@@ -143,6 +143,12 @@ public class GoalSingleton {
         return list;
     }
 
+    /**
+     * Checks if there is a goal in the database with matching UUID id. Returns null if there
+     * doesn't exist a goal.
+     * @param id
+     * @return goal
+     */
     public Goal getGoal(UUID id){
         GoalCursorWrapper cursor = qDatabase(
                 GOAL_ID + " = ?",
